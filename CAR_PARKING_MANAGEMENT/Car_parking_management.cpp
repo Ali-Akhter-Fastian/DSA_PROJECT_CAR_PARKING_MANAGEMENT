@@ -1,171 +1,130 @@
-#include<iostream>
+#include <iostream>
+#include <ctime>
 using namespace std;
+
 struct Car {
     string number;
     string owner;
     time_t entryTime;
 };
-class Stack
-{
-    Car *arr;
+
+class Stack {
+    Car* arr;
     int top;
     int size;
+
 public:
-    Stack(int size)
-    {
+    Stack(int size) {
         top = -1;
         arr = new Car[size];
         this->size = size;
     }
-    void push(Car val)
-    {
 
-        if (size - top > 1)
-        {
+    void push(Car val) {
+        if (top < size - 1) {
             top++;
             arr[top] = val;
-        }
-        else
-        {
+        } else {
             cout << "Stack Overflow" << endl;
         }
     }
-    void pop()
-    {
 
-        if (top >= 0)
-        {
+    void pop() {
+        if (top >= 0) {
             top--;
-        }
-        else
-        {
+        } else {
             cout << "Stack Underflow" << endl;
         }
     }
-    Car peek()
-    {
 
-        if (top >= 0)
-        {
+    Car peek() {
+        if (top >= 0) {
             return arr[top];
-        }
-        else
-        {
+        } else {
             cout << "Stack is Empty" << endl;
             return Car();
         }
     }
 
-    bool isEmpty()
-    {
-
-        if (top == -1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    bool isEmpty() {
+        return top == -1;
     }
 
     int getSizeOfLot() {
-        return top+1;
+        return top + 1;
     }
 };
-#include <iostream>
-using namespace std;
 
 class queue {
-
-    Car *arr;
+    Car* arr;
     int qSize;
     int qFront;
     int rear;
 
-    public:
-    queue(int size){
-
+public:
+    queue(int size) {
         arr = new Car[size];
         qFront = 0;
         rear = 0;
         qSize = size;
     }
-    void enqueue(Car val){
 
-        if (rear == qSize)
-        {
-            cout<<"Queue is Full"<<endl;
+    void enqueue(Car val) {
+        if (rear == qSize) {
+            cout << "Queue is Full" << endl;
             return;
         }
-        
         arr[rear] = val;
-        rear++; 
+        rear++;
     }
 
-    void dequeue(){
-        if (qFront == rear)
-        {
-            cout<<"Stack is empty!"<<endl;
+    void dequeue() {
+        if (qFront == rear) {
+            cout << "Queue is empty!" << endl;
             return;
         }
         arr[qFront] = Car();
         qFront++;
-        if (qFront == rear)
-        {
+        if (qFront == rear) {
             qFront = 0;
             rear = 0;
-        }  
+        }
     }
 
-    Car front(){
-
-        if (qFront == rear)
-        {
-            cout<<"Stack is empty!"<<endl;
+    Car front() {
+        if (qFront == rear) {
+            cout << "Queue is empty!" << endl;
             return Car();
-            
         }
-        
         return arr[qFront];
     }
 
-    Car back(){
-        if (qFront == rear)
-        {
-            cout<<"Stack is empty!"<<endl;
+    Car back() {
+        if (qFront == rear) {
+            cout << "Queue is empty!" << endl;
             return Car();
-            
         }
-        
-        return arr[rear-1];
+        return arr[rear - 1];
     }
 
-    int size(){
-        return qSize;
+    int size() {
+        return rear - qFront;
     }
 
-    bool isEmpty(){
-
-        if (qFront == rear)
-        {
-            return false;
-        }
-        return true;   
+    bool isEmpty() {
+        return qFront == rear;
     }
-
 };
+
 class ParkingLot {
 private:
     int capacity;
-   Stack lane;              
-    Stack tempStack;          
+    Stack lane;
+    Stack tempStack;
     queue waitingQueue;
 
 public:
-    ParkingLot(int c):lane(c),waitingQueue(c){
-        capacity=c;
-    }
+    ParkingLot(int c) : lane(c), tempStack(c), waitingQueue(c), capacity(c) {}
 
     void parkCar(Car car);
     void removeCar(string number);
@@ -173,12 +132,6 @@ public:
     void saveToFile(Car car, double fee);
     double calculateFee(time_t entry, time_t exit);
 };
-
-// ---
-
-// 🔧 Function Implementations
-
-// 🅰 Park Car
 
 void ParkingLot::parkCar(Car car) {
     if (lane.getSizeOfLot() < capacity) {
@@ -190,15 +143,9 @@ void ParkingLot::parkCar(Car car) {
     }
 }
 
-
-// ---
-
-// 🅱 Remove Car
-
 void ParkingLot::removeCar(string number) {
     bool found = false;
 
-    // Move cars until the target is found
     while (!lane.isEmpty()) {
         Car topCar = lane.peek();
         lane.pop();
@@ -211,15 +158,14 @@ void ParkingLot::removeCar(string number) {
         }
     }
 
-    // Move cars back
     while (!tempStack.isEmpty()) {
         lane.push(tempStack.peek());
         tempStack.pop();
     }
 
-    if (!found) cout << "Car not found in parking.\n";
+    if (!found)
+        cout << "Car not found in parking.\n";
     else if (!waitingQueue.isEmpty()) {
-        // Next car enters from queue
         Car nextCar = waitingQueue.front();
         waitingQueue.dequeue();
         parkCar(nextCar);
@@ -232,6 +178,7 @@ void ParkingLot::displayStatus() {
     cout << "Occupied: " << lane.getSizeOfLot() << endl;
     cout << "Waiting: " << waitingQueue.size() << endl;
 }
+
 int main() {
     ParkingLot lot(3); // capacity 3
     int choice;
@@ -246,14 +193,12 @@ int main() {
             cout << "Enter owner name: ";
             cin >> c.owner;
             lot.parkCar(c);
-        } 
-        else if (choice == 2) {
+        } else if (choice == 2) {
             string num;
             cout << "Enter car number to remove: ";
             cin >> num;
             lot.removeCar(num);
-        } 
-        else if (choice == 3) {
+        } else if (choice == 3) {
             lot.displayStatus();
         }
 
