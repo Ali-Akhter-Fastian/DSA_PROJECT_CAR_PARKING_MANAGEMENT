@@ -1,6 +1,4 @@
-#include <iostream>
-#include <ctime>
-#include <limits>   
+#include<iostream>
 using namespace std;
 
 struct Car {
@@ -100,8 +98,19 @@ public:
         return arr[qFront];
     }
 
-    int size() {
-        return rear - qFront;
+    Car back(){
+        if (qFront == rear)
+        {
+            cout<<"Stack is empty!"<<endl;
+            return Car();
+            
+        }
+        
+        return arr[rear-1];
+    }
+
+    int size(){
+        return qSize;
     }
 
     bool isEmpty() {
@@ -122,10 +131,16 @@ public:
     void parkCar(Car car);
     void removeCar(string number);
     void displayStatus();
-    //  void saveToFile(Car car, double fee);   //to be implemented
-    // double calculateFee(time_t entry, time_t exit);      //to be implemented
+    void saveToFile(Car car, double fee);
+    double calculateFee(time_t entry, time_t exit);
 };
-//FUNCTION TO PARK CAR IN LOT
+
+// ---
+
+// 🔧 Function Implementations
+
+// 🅰 Park Car
+
 void ParkingLot::parkCar(Car car) {
     if (lane.getSizeOfLot() < capacity) {
         lane.push(car);
@@ -135,7 +150,12 @@ void ParkingLot::parkCar(Car car) {
         waitingQueue.enqueue(car);
     }
 }
-//FUNCTION TO REMOVE CARS
+
+
+// ---
+
+// 🅱 Remove Car
+
 void ParkingLot::removeCar(string number) {
     bool found = false;
 
@@ -190,14 +210,12 @@ int main() {
             getline(cin, c.owner);    
 
             lot.parkCar(c);
-        } 
-        else if (choice == 2) {
+        } else if (choice == 2) {
             string num;
             cout << "Enter car number to remove: ";
             getline(cin, num);       
             lot.removeCar(num);
-        } 
-        else if (choice == 3) {
+        } else if (choice == 3) {
             lot.displayStatus();
         } 
         else if (choice != 4) {
