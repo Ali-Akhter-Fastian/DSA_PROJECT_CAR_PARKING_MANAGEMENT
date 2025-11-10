@@ -9,8 +9,13 @@ void ParkingLot::parkCar(Car car) {
         lane.push(car);
         cout << "Car \"" << car.number << "\" parked successfully.\n";
     } else {
-        cout << "Parking full. Added to waiting queue.\n";
-        waitingQueue.enqueue(car);
+        if(waitingQueue.size()<waitingQueue.Maxsize()){
+            cout << "Parking full. Added to waiting queue.\n";
+            waitingQueue.enqueue(car);
+        }
+        else{
+            cout<<"Waiting queue is also full, please try later!!! THANKS.\n";
+        }
     }
 }
 
@@ -49,4 +54,7 @@ void ParkingLot::displayStatus() {
     cout << "Total Capacity: " << capacity << endl;
     cout << "Occupied: " << lane.getSizeOfLot() << endl;
     cout << "Waiting: " << waitingQueue.size() << endl;
+}
+bool ParkingLot::is_empty() {
+    return lane.isEmpty();
 }

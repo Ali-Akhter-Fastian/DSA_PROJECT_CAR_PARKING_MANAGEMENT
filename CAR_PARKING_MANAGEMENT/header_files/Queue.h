@@ -18,6 +18,7 @@ public:
     Car front();
     int size();
     bool isEmpty();
+    int Maxsize();
 };
 
 #endif

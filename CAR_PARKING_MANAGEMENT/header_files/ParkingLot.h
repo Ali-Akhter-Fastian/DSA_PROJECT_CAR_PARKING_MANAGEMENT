@@ -17,6 +17,6 @@ public:
     void parkCar(Car car);
     void removeCar(string number);
     void displayStatus();
+    bool is_empty();
 };
-
 #endif
