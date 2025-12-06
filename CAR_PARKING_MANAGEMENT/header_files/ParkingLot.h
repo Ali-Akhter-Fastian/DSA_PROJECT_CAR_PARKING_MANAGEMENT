@@ -15,8 +15,10 @@ private:
 public:
     ParkingLot(int c);
     void parkCar(Car car);
-    void removeCar(string number);
+    double removeCar(string number);
     void displayStatus();
     bool is_empty();
+    double calculateFee(time_t entry, time_t exit);
+    void saveToFile(Car car, double fee, time_t exitTime);
 };
 #endif

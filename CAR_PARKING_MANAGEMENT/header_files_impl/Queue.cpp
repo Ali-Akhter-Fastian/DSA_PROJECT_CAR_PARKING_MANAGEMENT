@@ -37,3 +37,4 @@ Car queue::front() {
 int queue::size() { return rear - qFront; }
 int queue::Maxsize(){return qSize;}
 bool queue::isEmpty() { return qFront == rear; }
+
