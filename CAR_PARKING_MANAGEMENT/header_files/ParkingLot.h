@@ -19,6 +19,7 @@ public:
     void displayStatus();
     bool is_empty();
     double calculateFee(time_t entry, time_t exit);
-    void saveToFile(Car car, double fee, time_t exitTime);
+    void saveToFileOnEntry(Car car,  time_t exitTime);
+    void saveToFileOnExit(Car car,  time_t exitTime, double fee);
 };
 #endif

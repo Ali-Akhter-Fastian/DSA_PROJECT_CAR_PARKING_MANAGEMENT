@@ -9,6 +9,7 @@ struct Car {
     string number;
     string owner;
     time_t entryTime;
+    time_t exitTime;
 };
 
 #endif
