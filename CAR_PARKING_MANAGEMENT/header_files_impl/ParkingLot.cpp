@@ -86,6 +86,7 @@ void ParkingLot::displayStatus() {
     cout << "Occupied: " << lane.getSizeOfLot() << endl;
     cout << "Waiting: " << waitingQueue.size() << endl;
 }
+
 void ParkingLot::saveToFileOnEntry(Car car, time_t exitTime) {
     ofstream file("parking_records_entry.txt", ios::app);
 
